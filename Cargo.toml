@@ -1,0 +1,10 @@
+[package]
+name = "TP0"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "tp1"
+path = "src/tp1.rs"
+
+[dependencies]
