@@ -1,221 +1,155 @@
-# Synthèse du TP1 + main.rs - Concepts Rust Fondamentaux
+# ESGI Rust Practice
 
-Ce projet démontre les concepts fondamentaux du langage Rust à travers deux fichiers principaux : `main.rs` (concepts de base) et `tp1.rs` (application bancaire).
+Projet d'apprentissage du langage Rust avec manipulation de fichiers et gestion de trames structurées.
 
-## 📁 Structure du Projet
+## Vue d'ensemble
 
-```
-TP0/
-├── src/
-│   ├── main.rs    # Concepts Rust fondamentaux
-│   └── tp1.rs     # Application bancaire interactive
-├── Cargo.toml     # Configuration du projet
-└── README.md      # Ce fichier
-```
+Ce projet contient plusieurs programmes Rust démontrant :
+- Concepts fondamentaux du langage Rust
+- Système bancaire interactif avec menu
+- Génération et analyse de trames de données structurées
+- Écriture dans plusieurs formats de fichiers
 
-## 🔧 Comment Exécuter
+## Programmes disponibles
 
+### 1. Programme principal (main.rs)
+Démonstration des concepts de base de Rust : variables, fonctions, conditions, boucles.
 ```bash
-# Exécuter main.rs (par défaut)
 cargo run
+```
 
-# Exécuter tp1.rs (application bancaire)
+### 2. Système bancaire (tp1.rs)
+Application interactive de gestion de comptes bancaires avec menu complet.
+```bash
 cargo run --bin tp1
 ```
 
-## 📚 Concepts Rust Démontrés
-
-### 1. **Fonctions** (`main.rs`)
-
-```rust
-// Fonction avec paramètres et valeur de retour
-fn addition(a: i32, b: i32) -> i32 {
-    a + b  // Pas de point-virgule = valeur retournée
-}
-
-// Fonction avec référence de chaîne
-fn greet(name: &str) {
-    println!("Hello, {}!", name);
-}
+### 3. Générateur de trames (ecrivain.rs)
+Génère des trames de données structurées dans deux formats simultanément :
+- Format .log (technique avec timestamps Unix)
+- Format .txt (lisible avec dates formatées)
+```bash
+cargo run --bin ecrivain
 ```
 
-**Points clés :**
-- `fn` pour définir une fonction
-- `&str` pour les références de chaînes de caractères
-- `->` pour spécifier le type de retour
-- Dernière expression sans `;` est la valeur retournée
-
-### 2. **Variables et Types de Données** (`main.rs`)
-
-```rust
-let first_name = "John";           // &str (référence de chaîne)
-let age: u32 = 30;                 // Entier non signé 32 bits
-let age_signed: i32 = age as i32;  // Conversion de type
-let temperature: f64 = 36.6;       // Nombre à virgule flottante
+### 4. Analyseur de trames (analyseur_trame.rs)
+Analyse les fichiers de log générés et produit des statistiques détaillées.
+```bash
+cargo run --bin analyseur_trame
 ```
 
-**Points clés :**
-- Convention `snake_case` pour les variables
-- Types explicites avec `:` 
-- Conversion avec `as`
-- `.to_string()` pour convertir en String
+## Système de trames
 
-### 3. **Structures de Contrôle** (`main.rs`)
+### Structure des trames
+Chaque entrée contient :
+- **Timestamp** : Horodatage Unix
+- **Niveau** : Type d'événement (INFO, ERROR, WARNING, TRANSACTION, SECURITY, etc.)
+- **Message** : Description de l'événement
+- **Données** : Informations complémentaires (optionnel)
 
-#### Conditions
-```rust
-if nombre % 2 == 0 {
-    println!("{} est un nombre pair.", nombre);
-} else {
-    println!("{} est un nombre impair.", nombre);
-}
+### Formats de sortie
+
+#### Format .log (technique)
+```
+[1753116791] INFO - Démarrage de l'application
+[1753116791] TRANSACTION - Création de compte | Data: Compte Courant - Solde initial: 1500.00€
+[1753116791] ERROR - Échec de validation | Data: Code erreur: ERR_001
 ```
 
-#### Boucles
-```rust
-for i in 1..=5 {        // Inclut 5
-    println!("Compteur: {}", i);
-}
-
-for i in 1..5 {         // Exclut 5
-    println!("Compteur: {}", i);
-}
+#### Format .txt (lisible)
+```
+2025-07-21 23:11:11 [INFO] Démarrage de l'application
+2025-07-21 23:11:11 [TRANSACTION] Création de compte - Données: Compte Courant - Solde initial: 1500.00€
+2025-07-21 23:11:11 [ERROR] Échec de validation - Données: Code erreur: ERR_001
 ```
 
-### 4. **Collections et Itération** (`main.rs`)
+### Types de trames générées
 
-```rust
-let names = vec!["Alice", "Bob", "Charlie"];
-for (index, value) in names.iter().enumerate() {
-    println!("Index: {}, Value: {}", index, value);
-}
+1. **session_principale** : Événements généraux de l'application
+   - Démarrage/arrêt de l'application
+   - Transactions bancaires
+   - Erreurs et avertissements
+
+2. **securite** : Événements de sécurité
+   - Connexions/déconnexions
+   - Authentifications
+   - Tentatives d'accès non autorisé
+
+3. **temps_reel** : Événements temps réel
+   - Communications WebSocket
+   - Réceptions de données
+   - Traitements en cours
+
+## Utilisation
+
+### Workflow complet
+```bash
+# 1. Générer les trames de données
+cargo run --bin ecrivain
+
+# 2. Analyser les trames générées
+cargo run --bin analyseur_trame
+
+# 3. Tester le système bancaire
+cargo run --bin tp1
 ```
 
-**Points clés :**
-- `vec![]` macro pour créer des vecteurs
-- `.iter()` pour itérer sur une collection
-- `.enumerate()` pour obtenir index et valeur
-
-### 5. **Gestion d'Entrée Utilisateur Avancée** (`main.rs`)
-
-```rust
-use std::io;
-
-let mut input = String::new();
-io::stdin().read_line(&mut input).expect("Failed to read input");
-
-// Gestion des plages (ex: "1-3")
-if trimmed.contains('-') {
-    let parts: Vec<&str> = trimmed.split('-').collect();
-    // Validation et traitement...
-}
+### Compilation de tous les binaires
+```bash
+cargo build --bins
 ```
 
-**Fonctionnalités :**
-- Validation des entrées
-- Support des sélections multiples (plages)
-- Gestion d'erreurs robuste
+## Concepts Rust illustrés
 
-### 6. **Structures et Implémentations** (`tp1.rs`)
+### Concepts de base (main.rs)
+- Définition et appel de fonctions
+- Types de données et conversion
+- Structures de contrôle (if/else, boucles)
+- Collections et itération
+- Gestion des entrées utilisateur
 
-```rust
-// Définition de structure
-struct CompteBancaire {
-    nom: String,
-    solde: f64,
-}
+### Programmation orientée objet (tp1.rs)
+- Structures (struct) et implémentations (impl)
+- Méthodes avec &self et &mut self
+- Ownership et borrowing
+- Gestion d'erreurs avec match
 
-// Implémentation des méthodes
-impl CompteBancaire {
-    fn afficher_solde(&self) {  // Référence immutable
-        println!("Compte: {}, Solde: {:.2} €", self.nom, self.solde);
-    }
+### Manipulation de fichiers (ecrivain.rs, analyseur_trame.rs)
+- Écriture de fichiers avec différents formats
+- Lecture et parsing de fichiers structurés
+- Gestion des timestamps et dates
+- Structures de données complexes
 
-    fn retrait(&mut self, montant: f64) {  // Référence mutable
-        if self.solde >= montant {
-            self.solde -= montant;
-            // ...
-        }
-    }
-}
+## Structure du projet
+
+```
+ESGI-RustPractice/
+├── src/
+│   ├── main.rs               # Concepts fondamentaux
+│   ├── tp1.rs                # Système bancaire
+│   ├── ecrivain.rs           # Générateur de trames
+│   ├── analyseur_trame.rs    # Analyseur de logs
+│   ├── session_principale.log  # Trame principale (format technique)
+│   ├── session_principale.txt  # Trame principale (format lisible)
+│   ├── securite.log           # Trame sécurité (format technique)
+│   ├── securite.txt           # Trame sécurité (format lisible)
+│   ├── temps_reel.log         # Trame temps réel (format technique)
+│   └── temps_reel.txt         # Trame temps réel (format lisible)
+├── Cargo.toml               # Configuration du projet
+└── README.md               # Documentation
 ```
 
-**Points clés :**
-- `struct` pour définir des types personnalisés
-- `impl` pour implémenter des méthodes
-- `&self` pour accès en lecture seule
-- `&mut self` pour modifications
+## Fonctionnalités avancées
 
-### 7. **Ownership et Borrowing** (`tp1.rs`)
+- **Double format automatique** : Chaque trame est écrite simultanément en .log et .txt
+- **Analyse statistique** : Comptage par niveau, détection automatique d'erreurs
+- **Filtrage intelligent** : Séparation par types d'événements
+- **Validation robuste** : Gestion d'erreurs et récupération
+- **Formats optimisés** : Technique pour les machines, lisible pour les humains
 
-```rust
-let mut comptes = vec![
-    CompteBancaire { nom: "Compte Courant".to_string(), solde: 1250.75 },
-    CompteBancaire { nom: "Livret A".to_string(), solde: 5400.00 },
-];
+## Apprentissage progressif
 
-// Référence immutable pour affichage
-for compte in &comptes {
-    compte.afficher_solde();
-}
-
-// Accès mutable pour modification
-comptes[compte_choix].retrait(montant);
-```
-
-### 8. **Gestion d'Erreurs avec Pattern Matching** (`tp1.rs`)
-
-```rust
-let choix: u32 = match choix.trim().parse() {
-    Ok(num) => num,
-    Err(_) => {
-        println!("Veuillez entrer un numéro valide.");
-        continue;
-    }
-};
-
-// Validation avec garde
-let compte_choix: usize = match compte_choix_str.trim().parse::<usize>() {
-    Ok(num) if num > 0 && num <= comptes.len() => num - 1,
-    _ => {
-        println!("Choix de compte invalide.");
-        continue;
-    }
-};
-```
-
-**Points clés :**
-- `match` pour le pattern matching
-- `Ok()` et `Err()` pour gérer les résultats
-- Gardes avec `if` dans les patterns
-- `continue` pour reprendre la boucle
-
-### 9. **Application Interactive Complète** (`tp1.rs`)
-
-L'application bancaire démontre :
-- **Menu interactif** avec boucle principale
-- **Validation d'entrées** robuste
-- **Gestion d'état** mutable des comptes
-- **Interface utilisateur** claire et intuitive
-
-#### Fonctionnalités :
-1. **Affichage de solde** - Consultation des comptes
-2. **Retrait d'argent** - Modification des soldes avec validation
-3. **Liste des comptes** - Affichage de tous les comptes
-4. **Système de menu** - Navigation entre les options
-
-## 🎯 Concepts Clés Illustrés
-
-| Concept | Fichier | Description |
-|---------|---------|-------------|
-| **Functions** | `main.rs` | Définition et appel de fonctions |
-| **Variables** | `main.rs` | Types, conversion, mutabilité |
-| **Control Flow** | `main.rs` | if/else, boucles for |
-| **Collections** | `main.rs` | Vecteurs, itération |
-| **User Input** | `main.rs` | Lecture et validation avancée |
-| **Structs** | `tp1.rs` | Types personnalisés |
-| **Methods** | `tp1.rs` | Implémentation de comportements |
-| **Ownership** | `tp1.rs` | Références mutables/immutables |
-| **Error Handling** | `tp1.rs` | Pattern matching, validation |
-| **State Management** | `tp1.rs` | Application interactive |
+1. **Débutant** : Commencer par `cargo run` pour voir les concepts de base
+2. **Intermédiaire** : Tester `cargo run --bin tp1` pour l'application complète
+3. **Avancé** : Utiliser `cargo run --bin ecrivain` puis `cargo run --bin analyseur_trame` pour la manipulation de fichiers
 

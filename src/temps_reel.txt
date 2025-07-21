@@ -1,0 +1,15 @@
+2025-07-21 23:11:11 [REALTIME] Connexion WebSocket établie
+2025-07-21 23:11:11 [REALTIME] Réception de données - Données: Taille: 1024 bytes
+2025-07-21 23:11:11 [REALTIME] Traitement terminé - Données: Durée: 45ms
+2025-07-21 23:17:17 [REALTIME] Connexion WebSocket établie
+2025-07-21 23:17:17 [REALTIME] Réception de données - Données: Taille: 1024 bytes
+2025-07-21 23:17:17 [REALTIME] Traitement terminé - Données: Durée: 45ms
+2025-07-21 21:3:3 [REALTIME] Connexion WebSocket établie
+2025-07-21 21:3:3 [REALTIME] Réception de données - Données: Taille: 1024 bytes
+2025-07-21 21:3:3 [REALTIME] Traitement terminé - Données: Durée: 45ms
+2025-07-21 21:9:9 [REALTIME] Connexion WebSocket établie
+2025-07-21 21:9:9 [REALTIME] Réception de données - Données: Taille: 1024 bytes
+2025-07-21 21:9:9 [REALTIME] Traitement terminé - Données: Durée: 45ms
+2025-07-21 20:20:20 [REALTIME] Connexion WebSocket établie
+2025-07-21 20:20:20 [REALTIME] Réception de données - Données: Taille: 1024 bytes
+2025-07-21 20:20:20 [REALTIME] Traitement terminé - Données: Durée: 45ms

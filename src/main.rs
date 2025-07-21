@@ -63,7 +63,7 @@ fn main() {
     loop {
         compteur += 1;
         if compteur > 5 {
-            break;1
+            break;
         }
         println!("Compteur dans la boucle: {}", compteur);
     }
