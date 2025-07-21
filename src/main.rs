@@ -52,6 +52,29 @@ fn main() {
         println!("Compteur: {}", i);
     }
 
+    // Itérer sur des références à des éléments d'un tableau
+    let tab = [1, 2, 3, 4, 5];
+    for &element in &tab {
+        println!("Élément du tableau: {}", element);
+    }
+
+    //loop
+    let mut compteur = 0;
+    loop {
+        compteur += 1;
+        if compteur > 5 {
+            break;1
+        }
+        println!("Compteur dans la boucle: {}", compteur);
+    }
+
+    // while
+    let mut compteur_while = 0;
+    while compteur_while < 5 {
+        compteur_while += 1;
+        println!("Compteur dans la boucle while: {}", compteur_while);
+    }
+
     // for (index, value) in collection.iter().enumerate() {
     //     println!("Index: {}, Value: {}", index, value);
     // }
@@ -122,5 +145,24 @@ fn main() {
     }
 
 
+    // 4 les structures de données
 
+    struct Salarie {
+        nom: String,
+        ville: String,
+        age: u32,
+        solde: f64,
+   }
+
+   let kevin = Salarie {
+       nom: String::from("Kevin"),
+       ville: String::from("Paris"),
+       age: 30,
+       solde: 2500.75,
+   };
+
+    println!("Nom: {}, Ville: {}, Âge: {}, Solde: {}", kevin.nom, kevin.ville, kevin.age, kevin.solde);
+
+
+    
 }

@@ -25,6 +25,25 @@ impl CompteBancaire {
             println!("Solde insuffisant pour un retrait de {:.2} €.", montant);
         }
     }
+
+    // BONUS: Effectue un dépôt sur le compte (empêche les montants négatifs)
+    fn depot(&mut self, montant: f64) {
+        if montant <= 0.0 {
+            println!("Le montant du dépôt doit être positif.");
+        } else {
+            self.solde += montant;
+            println!("Dépôt de {:.2} € effectué.", montant);
+            self.afficher_solde();
+        }
+    }
+
+    // BONUS: Renomme le compte et retourne un nouveau compte avec le nom changé
+    fn renommer(&self, nouveau_nom: String) -> CompteBancaire {
+        CompteBancaire {
+            nom: nouveau_nom,
+            solde: self.solde,
+        }
+    }
 }
 
 fn main() {
@@ -35,7 +54,7 @@ fn main() {
     ];
 
     // Définit les options du menu
-    let options = ["Afficher solde", "Retrait", "Liste comptes", "Quitter"];
+    let options = ["Afficher solde", "Retrait", "Dépôt", "Liste comptes", "Renommer compte", "Quitter"];
 
     // Boucle principale du menu
     loop {
@@ -103,14 +122,71 @@ fn main() {
                 };
                 comptes[compte_choix].retrait(montant);
             }
-            3 => { // Liste comptes
+            3 => { // Dépôt
+                println!("Sur quel compte souhaitez-vous faire un dépôt ?");
+                for (i, compte) in comptes.iter().enumerate() {
+                    println!("{}. {}", i + 1, compte.nom);
+                }
+                let mut compte_choix_str = String::new();
+                io::stdin().read_line(&mut compte_choix_str).expect("Échec de la lecture");
+                let compte_choix: usize = match compte_choix_str.trim().parse::<usize>() {
+                    Ok(num) if num > 0 && num <= comptes.len() => num - 1,
+                    _ => {
+                        println!("Choix de compte invalide.");
+                        continue;
+                    }
+                };
+
+                println!("Entrez le montant du dépôt :");
+                let mut montant_str = String::new();
+                io::stdin().read_line(&mut montant_str).expect("Échec de la lecture");
+                let montant: f64 = match montant_str.trim().parse() {
+                    Ok(num) => num,
+                    Err(_) => {
+                        println!("Montant invalide.");
+                        continue;
+                    }
+                };
+                comptes[compte_choix].depot(montant);
+            }
+            4 => { // Liste comptes
                 println!("\n--- Liste des Comptes ---");
                 for compte in &comptes {
                     compte.afficher_solde();
                 }
                 println!("-------------------------");
             }
-            4 => { // Quitter
+            5 => { // Renommer compte
+                println!("Quel compte souhaitez-vous renommer ?");
+                for (i, compte) in comptes.iter().enumerate() {
+                    println!("{}. {}", i + 1, compte.nom);
+                }
+                let mut compte_choix_str = String::new();
+                io::stdin().read_line(&mut compte_choix_str).expect("Échec de la lecture");
+                let compte_choix: usize = match compte_choix_str.trim().parse::<usize>() {
+                    Ok(num) if num > 0 && num <= comptes.len() => num - 1,
+                    _ => {
+                        println!("Choix de compte invalide.");
+                        continue;
+                    }
+                };
+
+                println!("Entrez le nouveau nom du compte :");
+                let mut nouveau_nom = String::new();
+                io::stdin().read_line(&mut nouveau_nom).expect("Échec de la lecture");
+                let nouveau_nom = nouveau_nom.trim().to_string();
+                
+                if nouveau_nom.is_empty() {
+                    println!("Le nom ne peut pas être vide.");
+                    continue;
+                }
+
+                // Crée un nouveau compte avec le nom changé
+                let nouveau_compte = comptes[compte_choix].renommer(nouveau_nom.clone());
+                comptes[compte_choix] = nouveau_compte;
+                println!("Compte renommé avec succès en '{}'.", nouveau_nom);
+            }
+            6 => { // Quitter
                 println!("Merci d'avoir utilisé nos services. À bientôt !");
                 break;
             }
