@@ -1,36 +1,71 @@
 use tokio::net::TcpStream;
 use tokio::io::{AsyncWriteExt, stdin, AsyncBufReadExt, BufReader};
+use tokio::time::{Duration, Instant};
 
-/// Client simple : se connecte au serveur, lit l'entrée utilisateur et envoie chaque ligne.
-#[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // Connexion au serveur
-    let mut stream = TcpStream::connect("127.0.0.1:8080").await?;
-    let local_addr = stream.local_addr()?;
-    println!("Connecté depuis le port {}! Tapez vos messages (Ctrl+C pour quitter):", local_addr.port());
+pub struct ClientConnection {
+    pub stream: TcpStream,
+    pub port: u16,
+}
 
-    // Préparation de la lecture utilisateur
-    let stdin = stdin();
-    let mut reader = BufReader::new(stdin);
-    let mut line = String::new();
+impl ClientConnection {
+    pub async fn connect(addr: &str) -> Result<Self, Box<dyn std::error::Error>> {
+        let stream = TcpStream::connect(addr).await?;
+        let port = stream.local_addr()?.port();
+        Ok(ClientConnection { stream, port })
+    }
 
-    // Boucle principale : lecture et envoi
-    loop {
-        print!("> ");
-        line.clear();
-        match reader.read_line(&mut line).await {
-            Ok(0) => break,
-            Ok(_) => {
-                let message = format!("[Client:{}] {}", local_addr.port(), line.trim());
-                stream.write_all(format!("{}\n", message).as_bytes()).await?;
-                stream.flush().await?;
-            }
-            Err(e) => {
-                eprintln!("Erreur de lecture: {}", e);
-                break;
+    pub async fn send_message(&mut self, content: &str) -> Result<(), Box<dyn std::error::Error>> {
+        let message = format!("[Client:{}] {}\n", self.port, content);
+        self.stream.write_all(message.as_bytes()).await?;
+        self.stream.flush().await?;
+        Ok(())
+    }
+
+    pub async fn send_burst_messages(&mut self, count: u32, start_time: Instant, delay_ms: u64) -> Result<(), Box<dyn std::error::Error>> {
+        for i in 1..=count {
+            let content = format!("Message rapide {} - {}ms", i, start_time.elapsed().as_millis());
+            self.send_message(&content).await?;
+            tokio::time::sleep(Duration::from_millis(delay_ms)).await;
+        }
+        Ok(())
+    }
+
+    pub async fn interactive_mode(&mut self) -> Result<(), Box<dyn std::error::Error>> {
+        println!("Tapez vos messages (Ctrl+C pour quitter):");
+        
+        let stdin = stdin();
+        let mut reader = BufReader::new(stdin);
+        let mut line = String::new();
+
+        loop {
+            print!("> ");
+            line.clear();
+            match reader.read_line(&mut line).await {
+                Ok(0) => break,
+                Ok(_) => {
+                    self.send_message(line.trim()).await?;
+                }
+                Err(e) => {
+                    eprintln!("Erreur de lecture: {}", e);
+                    break;
+                }
             }
         }
+        Ok(())
     }
+}
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mut client = ClientConnection::connect("127.0.0.1:8080").await?;
+    println!("Connecté depuis le port {}!", client.port);
+
+    println!("Envoi de messages en rafale pour tester la concurrence...");
+    let start = Instant::now();
+    client.send_burst_messages(10, start, 10).await?;
+
+    println!("Messages envoyés!");
+    client.interactive_mode().await?;
 
     println!("Déconnexion...");
     Ok(())
