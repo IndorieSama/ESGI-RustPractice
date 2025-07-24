@@ -1,7 +1,0 @@
-=== RAPPORT D'ACTIVITÉ - 2025-07-21 20:20:20 ===
-2025-07-21 20:20:20 [SECURITY] Connexion utilisateur - Données: User ID: user123
-2025-07-21 20:20:20 [SECURITY] Authentification réussie
-2025-07-21 20:20:20 [SECURITY] Accès aux comptes autorisé
-2025-07-21 20:20:20 [SECURITY] Tentative d'accès non autorisé - Données: IP: 192.168.1.100
-2025-07-21 20:20:20 [SECURITY] Déconnexion utilisateur
-=== FIN DU RAPPORT ===

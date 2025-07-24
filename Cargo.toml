@@ -9,11 +9,8 @@ name = "tp1"
 path = "src/tp1.rs"
 
 [[bin]]
-name = "ecrivain"
-path = "src/ecrivain.rs"
-
-[[bin]]
-name = "analyseur_trame"
-path = "src/analyseur_trame.rs"
+name = "gestionnaire_fichiers"
+path = "src/gestionnaire_fichiers.rs"
 
 [dependencies]
+chrono = "0.4"

@@ -1,4 +1,0 @@
-Bonjour, ceci est un fichier de test !
-Ligne 2 : Données d'exemple
-Ligne 3 : Apprentissage de Rust
-Ligne 4 : Manipulation de fichiers

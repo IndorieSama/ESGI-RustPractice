@@ -1,7 +1,0 @@
-=== JOURNAL TECHNIQUE - SESSION 1753118420 ===
-[1753118420] SECURITY - Connexion utilisateur | Data: User ID: user123
-[1753118420] SECURITY - Authentification réussie
-[1753118420] SECURITY - Accès aux comptes autorisé
-[1753118420] SECURITY - Tentative d'accès non autorisé | Data: IP: 192.168.1.100
-[1753118420] SECURITY - Déconnexion utilisateur
-=== FIN DU JOURNAL ===
