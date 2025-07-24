@@ -5,7 +5,7 @@ use tokio::time::Instant;
 /// Client de test pour la concurrence : lance plusieurs connexions simultanées
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    println!("🚀 Test de concurrence - Lancement de 10 clients simultanés...");
+    println!("Test de concurrence - Lancement de 10 clients simultanés...");
     
     let mut handles = vec![];
     let start_time = Instant::now();
@@ -14,8 +14,8 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     for client_id in 1..=10 {
         let handle = tokio::spawn(async move {
             match test_client(client_id, start_time).await {
-                Ok(_) => println!("✅ Client {} terminé avec succès", client_id),
-                Err(e) => eprintln!("❌ Client {} erreur: {}", client_id, e),
+                Ok(_) => println!("Client {} terminé avec succès", client_id),
+                Err(e) => eprintln!("Client {} erreur: {}", client_id, e),
             }
         });
         handles.push(handle);
@@ -26,7 +26,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         let _ = handle.await;
     }
     
-    println!("🏁 Test de concurrence terminé! Vérifiez les logs du serveur.");
+    println!("Test de concurrence terminé! Vérifiez les logs du serveur.");
     Ok(())
 }
 
