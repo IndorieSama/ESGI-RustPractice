@@ -13,9 +13,7 @@ const SERVER_PORT: &str = "127.0.0.1:8080";
 // Point d'entrée principal du serveur asynchrone.
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    
-    // Arc<Mutex<...>> pour permettre un accès concurrent sécurisé au fichier de log.
-    let log_writer = Arc::new(Mutex::new( //Arc<Mutex<...>> pour permettre un accès concurrent sécurisé.
+    let log_writer = Arc::new(Mutex::new(
         OpenOptions::new()
             .create(true)
             .append(true)
@@ -23,7 +21,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             .await?
     ));
 
-    // Démarre le serveur TCP sur l'adresse et le port spécifiés.
+    // Démarre le serveur TCP.
     let listener = TcpListener::bind(SERVER_PORT).await?;
     println!("Serveur de journalisation démarré sur {}", SERVER_PORT);
 

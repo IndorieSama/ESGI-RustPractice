@@ -39,7 +39,7 @@ async fn test_client(client_id: u32, start_time: Instant) -> Result<(), Box<dyn 
         let content = format!("TestClient{} Message concurrent {} - {}ms", client_id, msg_id, elapsed);
         client.send_message(&content).await?;
         
-        // Attente très courte pour maximiser la concurrence
+
         tokio::time::sleep(tokio::time::Duration::from_millis(5)).await;
     }
     

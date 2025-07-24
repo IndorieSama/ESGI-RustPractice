@@ -7,11 +7,14 @@ Projet d'apprentissage du langage Rust avec manipulation de fichiers et gestion 
 Ce projet contient plusieurs programmes Rust démontrant :
 - Concepts fondamentaux du langage Rust
 - Système bancaire interactif avec menu
-- Génération et analyse de trames de données structurées
-- Écriture dans plusieurs formats de fichiers
-- Lecture et écriture de fichiers avec sérialisation
+- Concepte objet avec structures et implémentations
 - Utilisation de bibliothèques externes pour la manipulation de données
 - Gestion des erreurs et validation des données
+- Serveur de journalisation TCP avec gestion des connexions concurrentes
+- Client TCP pour envoyer des messages au serveur
+- Journalisation des événements avec horodatage
+- Accès concurrent sécurisé aux ressources partagées
+
 
 ## Structure du projet
 
@@ -23,13 +26,13 @@ ESGI-RustPractice/
 │   │   ├── main.rs                 # Concepts fondamentaux
 │   │   ├── gestionnaire_fichiers.rs # Gestion de fichiers et sérialisation
 │   │   ├── tp1.rs                  # Système bancaire
-│   │   └── goodPractice.rs         # Bonnes pratiques Rust
 │   ├── Cargo.lock
 │   └── Cargo.toml
 ├── journalisation_server/          # Serveur de journalisation TCP
 │   ├── src/
 │   │   ├── main.rs                 # Serveur TCP
-│   │   └── client.rs               # Client TCP
+│   │   ├── client.rs               # Client TCP
+│   │   └── test_concurrent.rs      # Test de concurrence avec 10 clients
 │   ├── logs/
 │   │   └── server.log              # Fichier de logs
 │   ├── Cargo.lock
@@ -60,8 +63,9 @@ Pour compiler et exécuter le serveur de journalisation :
 ```bash
 cd journalisation_server
 cargo build
-cargo run --bin server  # Démarre le serveur TCP
-cargo run --bin client  # Démarre le client TCP
+cargo run --bin server         # Démarre le serveur TCP
+cargo run --bin client         # Démarre le client TCP
+cargo run --bin test_concurrent # Lance un test de concurrence avec 10 clients
 ```
 
 ### 1. Programme principal (TP0/src/main.rs)
@@ -90,6 +94,9 @@ cd journalisation_server && cargo run --bin server
 
 # Terminal 2 - Client
 cd journalisation_server && cargo run --bin client
+
+# Test de concurrence automatisé (10 clients simultanés)
+cd journalisation_server && cargo run --bin test_concurrent
 ```
 
 ## Concepts Rust illustrés
@@ -119,3 +126,4 @@ cd journalisation_server && cargo run --bin client
 - Journalisation des événements
 - Communication client-serveur en temps réel
 - Safety avec Arc et Mutex pour l'accès concurrent aux ressources partagées
+- Test de concurrence automatisé avec orchestrateur de clients multiples
