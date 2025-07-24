@@ -118,3 +118,4 @@ cd journalisation_server && cargo run --bin client
 - Gestion de connexions clients multiples
 - Journalisation des événements
 - Communication client-serveur en temps réel
+- Safety avec Arc et Mutex pour l'accès concurrent aux ressources partagées
