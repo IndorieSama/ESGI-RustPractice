@@ -12,6 +12,10 @@ path = "src/main.rs"
 name = "client"
 path = "src/client.rs"
 
+[[bin]]
+name = "test_concurrent"
+path = "src/test_concurrent.rs"
+
 
 [dependencies]
 chrono = "0.4"
