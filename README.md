@@ -80,8 +80,7 @@ ESGI-RustPractice/
 │   ├── logs/
 │   │   └── server.log              # Fichier de logs
 │   └── Cargo.toml
-├── README.md                       # Documentation
-└── TASK_REQUIREMENTS.md            # Spécifications des TP
+└── README.md                       # Documentation
 ```
 
 ## Guide d'utilisation
