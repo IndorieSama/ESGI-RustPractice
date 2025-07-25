@@ -1,0 +1,17 @@
+[package]
+name = "tp7_dns"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.0", features = ["full"] }
+byteorder = "1.4"
+rand = "0.8"
+
+[[bin]]
+name = "serveur_dns"
+path = "src/serveur.rs"
+
+[[bin]]
+name = "client_dns"
+path = "src/client.rs"
