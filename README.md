@@ -2,6 +2,26 @@
 
 Projet d'apprentissage avancé du langage Rust avec focus sur la programmation réseau
 
+# Capture fonctionelle TP 7 à 9
+
+Les captures fonctionnelles des TP 7 à 9 sont disponibles dans le dossier `Captures_Fonctionelle` du projet. 
+Elles montrent les interactions avec les clients et serveurs, ainsi que les fonctionnalités implémentées.
+
+# Table des matières
+- [Vue d'ensemble](#vue-densemble)
+- [Structure du projet](#structure-du-projet)
+- [Guide d'utilisation](#guide-dutilisation)
+- [Démarrage rapide](#démarrage-rapide)
+- [Fonctionnalités détaillées](#fonctionnalités-détaillées)
+- [Concepts Rust illustrés](#concepts-rust-illustrés)
+- [Concepts de base](#concepts-de-base)
+- [Programmation orientée objet](#programmation-orientée-objet)
+- [Manipulation de fichiers](#manipulation-de-fichiers)
+- [Programmation réseau avancée](#programmation-réseau-avancée)
+- [Badges](#badges)
+
+
+
 ## Vue d'ensemble
 
 Ce projet contient plusieurs programmes Rust démontrant une progression complète en programmation réseau :
@@ -178,3 +198,12 @@ cargo run --bin test_concurrent # Test de concurrence (10 clients)
 - **Concurrence** : Arc, Mutex et gestion multi-clients
 - **Sérialisation** : serde pour JSON et données binaires
 - **Programmation asynchrone** : tokio et futures pour performance
+
+
+# Badges
+
+![Rust](https://img.shields.io/badge/rust-000000?style=flat-square&logo=rust&logoColor=white)
+![GitHub last commit](https://img.shields.io/github/last-commit/IndorieSama/ESGI-RustPractice?style=flat-square)
+![GitHub repo size](https://img.shields.io/github/repo-size/IndorieSama/ESGI-RustPractice?style=flat-square)
+![GitHub language count](https://img.shields.io/github/languages/count/IndorieSama/ESGI-RustPractice?style=flat-square)
+![GitHub top language](https://img.shields.io/github/languages/top/IndorieSama/ESGI-RustPractice?style=flat-square)
