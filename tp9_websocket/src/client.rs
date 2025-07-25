@@ -78,7 +78,7 @@ impl ClientWebSocket {
     async fn demarrer_session_interactive(
         &mut self,
         mut ws_sender: futures_util::stream::SplitSink<tokio_tungstenite::WebSocketStream<tokio_tungstenite::MaybeTlsStream<tokio::net::TcpStream>>, Message>,
-        mut ws_receiver: futures_util::stream::SplitStream<tokio_tungstenite::WebSocketStream<tokio_tungstenite::MaybeTlsStream<tokio::net::TcpStream>>>,
+        ws_receiver: futures_util::stream::SplitStream<tokio_tungstenite::WebSocketStream<tokio_tungstenite::MaybeTlsStream<tokio::net::TcpStream>>>,
     ) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
         println!("\n=== Chat WebSocket Démarré ===");
         println!("Tapez vos messages et appuyez sur Entrée");

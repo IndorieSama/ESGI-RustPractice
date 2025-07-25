@@ -1,5 +1,5 @@
 use byteorder::{BigEndian, ReadBytesExt, WriteBytesExt};
-use std::io::{Cursor, Write};
+use std::io::{Cursor};
 
 /// Structure représentant l'en-tête DNS selon RFC 1035
 #[derive(Debug, Clone)]

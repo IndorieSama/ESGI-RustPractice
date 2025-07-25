@@ -4,14 +4,12 @@ use std::net::SocketAddr;
 use std::sync::Arc;
 use tokio::net::{TcpListener, TcpStream};
 use tokio::sync::{broadcast, Mutex};
-use tokio_tungstenite::{accept_async, tungstenite::Message, WebSocketStream};
+use tokio_tungstenite::accept_async;
 use tp9_websocket::{MessageWebSocket, TypeMessageWs, utils};
 
 /// Structure représentant un utilisateur connecté via WebSocket
 #[derive(Debug, Clone)]
 struct UtilisateurWebSocket {
-    nom: String,
-    adresse: SocketAddr,
     id_session: String,
 }
 
@@ -50,8 +48,6 @@ impl EtatServeurWs {
 
         let id_session = utils::generer_id_session();
         let utilisateur = UtilisateurWebSocket {
-            nom: nom.clone(),
-            adresse,
             id_session: id_session.clone(),
         };
 
@@ -346,7 +342,7 @@ impl ServeurWebSocket {
 
     /// Traite les commandes spéciales
     async fn traiter_commande(
-        nom_utilisateur: &str,
+        _nom_utilisateur: &str,
         etat: &Arc<Mutex<EtatServeurWs>>,
         commande: &str,
     ) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {

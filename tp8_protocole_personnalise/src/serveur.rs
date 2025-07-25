@@ -5,13 +5,14 @@ use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::{TcpListener, TcpStream};
 use tokio::sync::Mutex;
 use tokio::time::{timeout, Duration};
-use tp8_protocole_personnalise::{MessageProtocole, TypeOperation, RequeteCalcul, calculateur, codes_erreurs};
+use tp8_protocole_personnalise::{MessageProtocole, TypeOperation, calculateur, codes_erreurs};
 
 /// Structure représentant une session client
 #[derive(Debug, Clone)]
 struct SessionClient {
     session_id: String,
     adresse: SocketAddr,
+    #[allow(dead_code)]
     connexions_actives: u32,
     calculs_effectues: u32,
     temps_connexion: chrono::DateTime<chrono::Utc>,
