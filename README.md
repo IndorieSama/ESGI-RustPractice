@@ -1,18 +1,22 @@
-# ESGI Rust Practice
+# ESGI Rust Practice - Programmation Réseau
 
-Projet d'apprentissage du langage Rust
+Projet d'apprentissage avancé du langage Rust avec focus sur la programmation réseau
 
 ## Vue d'ensemble
 
-Ce projet contient plusieurs programmes Rust démontrant :
-- Concepts fondamentaux du langage Rust
-- Système bancaire interactif avec menu
-- Concepte objet avec structures et implémentations
-- Utilisation de bibliothèques externes pour la manipulation de données
-- Gestion des erreurs et validation des données
-- Serveur de journalisation TCP avec gestion des connexions concurrentes
-- Client TCP pour envoyer des messages au serveur
-- Journalisation des événements avec horodatage
+Ce projet contient plusieurs programmes Rust démontrant une progression complète en programmation réseau :
+- **TP0** : Concepts fondamentaux du langage Rust
+- **TP7** : Client et Serveur DNS simples (UDP)
+- **TP8** : Protocole de calcul à distance personnalisé (TCP)
+- **TP9** : Chat en temps réel avec WebSockets
+- **Serveur de journalisation** : TCP avec gestion des connexions concurrentes
+
+### Concepts couverts
+- Programmation réseau UDP et TCP
+- Protocoles personnalisés avec sérialisation/désérialisation
+- Communication WebSocket bidirectionnelle
+- Programmation asynchrone avec Tokio
+- Gestion des messages texte et binaires
 - Accès concurrent sécurisé aux ressources partagées
 
 
@@ -25,8 +29,28 @@ ESGI-RustPractice/
 │   │   ├── fichiers/               # Fichiers générés par gestionnaire_fichiers.rs
 │   │   ├── main.rs                 # Concepts fondamentaux
 │   │   ├── gestionnaire_fichiers.rs # Gestion de fichiers et sérialisation
-│   │   ├── tp1.rs                  # Système bancaire
-│   ├── Cargo.lock
+│   │   └── tp1.rs                  # Système bancaire
+│   └── Cargo.toml
+├── tp7_dns_simple/                 # TP7 - DNS Client/Serveur (UDP)
+│   ├── src/
+│   │   ├── lib.rs                  # Structures DNS selon RFC 1035
+│   │   ├── main.rs                 # Point d'entrée principal
+│   │   ├── client.rs               # Client DNS UDP
+│   │   └── serveur.rs              # Serveur DNS UDP
+│   └── Cargo.toml
+├── tp8_protocole_personnalise/     # TP8 - Protocole de calcul personnalisé (TCP)
+│   ├── src/
+│   │   ├── lib.rs                  # Protocole de calcul JSON avec operations math
+│   │   ├── main.rs                 # Point d'entrée principal
+│   │   ├── client.rs               # Client de calcul TCP interactif
+│   │   └── serveur.rs              # Serveur de calcul TCP multi-sessions
+│   └── Cargo.toml
+├── tp9_websocket/                  # TP9 - WebSocket Chat (WebSocket)
+│   ├── src/
+│   │   ├── lib.rs                  # Messages WebSocket texte/binaire
+│   │   ├── main.rs                 # Point d'entrée principal
+│   │   ├── client.rs               # Client WebSocket interactif
+│   │   └── serveur.rs              # Serveur WebSocket multi-connexions
 │   └── Cargo.toml
 ├── journalisation_server/          # Serveur de journalisation TCP
 │   ├── src/
@@ -35,69 +59,95 @@ ESGI-RustPractice/
 │   │   └── test_concurrent.rs      # Test de concurrence avec 10 clients
 │   ├── logs/
 │   │   └── server.log              # Fichier de logs
-│   ├── Cargo.lock
 │   └── Cargo.toml
-└── README.md                       # Documentation
+├── README.md                       # Documentation
+└── TASK_REQUIREMENTS.md            # Spécifications des TP
 ```
 
-## Programmes disponibles
+## Guide d'utilisation
 
-### 0. Build et exécution
+### Démarrage rapide
 
-#### TP0 - Exercices de base
-Pour compiler et exécuter les programmes du TP0 :
+Chaque TP est un projet Rust indépendant. Naviguez dans le dossier souhaité et utilisez `cargo run`.
+
+#### TP7 - DNS Client/Serveur (UDP)
+```bash
+cd tp7_dns_simple
+
+# Terminal 1 - Serveur DNS
+cargo run --bin serveur_dns
+
+# Terminal 2 - Client DNS
+cargo run --bin client_dns
+```
+
+#### TP8 - Protocole de calcul à distance personnalisé (TCP)
+```bash
+cd tp8_protocole_personnalise
+
+# Terminal 1 - Serveur de calcul
+cargo run --bin serveur
+
+# Terminal 2+ - Clients de calcul
+cargo run --bin client
+```
+
+#### TP9 - Chat WebSocket en temps réel
+```bash
+cd tp9_websocket
+
+# Terminal 1 - Serveur WebSocket
+cargo run --bin serveur_websocket
+
+# Terminal 2+ - Clients WebSocket
+cargo run --bin client_websocket
+```
+
+#### TP0 - Exercices de base Rust
 ```bash
 cd TP0
-cargo build
-cargo run  # Programme principal (main.rs)
-```
-
-ou pour exécuter un binaire spécifique :
-```bash
-cargo run --bin tp1                    # Système bancaire
-cargo run --bin gestionnaire_fichiers  # Gestionnaire de fichiers
+cargo run                             # Programme principal
+cargo run --bin tp1                   # Système bancaire
+cargo run --bin gestionnaire_fichiers # Gestion de fichiers
 ```
 
 #### Serveur de journalisation
-Pour compiler et exécuter le serveur de journalisation :
 ```bash
 cd journalisation_server
-cargo build
-cargo run --bin server         # Démarre le serveur TCP
-cargo run --bin client         # Démarre le client TCP
-cargo run --bin test_concurrent # Lance un test de concurrence avec 10 clients
+cargo run --bin server         # Serveur TCP
+cargo run --bin client         # Client TCP
+cargo run --bin test_concurrent # Test de concurrence (10 clients)
 ```
 
-### 1. Programme principal (TP0/src/main.rs)
-Démonstration des concepts de base de Rust : variables, fonctions, conditions, boucles.
-```bash
-cd TP0 && cargo run
-```
+## Fonctionnalités détaillées
 
-### 2. Système bancaire (TP0/src/tp1.rs)
-Application interactive de gestion de comptes bancaires avec menu complet.
-```bash
-cd TP0 && cargo run --bin tp1
-```
+### TP7 - DNS Client/Serveur (UDP)
+- Client DNS : Résolution de noms de domaine en adresses IP
+- Serveur DNS : Réponses à des requêtes pour domaines prédéfinis
+- Protocole UDP : Communication réseau non-connectée
+- Format DNS RFC 1035 : Parsing et construction de messages DNS
+- Interface interactive : Session de résolution en temps réel
 
-### 3. Gestionnaire de fichiers (TP0/src/gestionnaire_fichiers.rs)
-Outils pour lire et écrire des fichiers, sérialiser et désérialiser des données.
-```bash
-cd TP0 && cargo run --bin gestionnaire_fichiers
-```
+### TP8 - Protocole de calcul à distance personnalisé (TCP)
+- Protocole personnalisé : Format JSON avec sérialisation serde pour calculs
+- Serveur de calcul : Gestion simultanée de multiples sessions client
+- Operations mathématiques : Addition, Soustraction, Multiplication, Division, Puissance, Racine, Factorielle, Fibonacci
+- Gestion des sessions : Suivi des statistiques par client avec ID de session
+- Commandes serveur : info (informations), stats (statistiques), ping (test connexion)
+- Robustesse : Validation des paramètres et gestion complète des erreurs
 
-### 4. Serveur de journalisation TCP (journalisation_server/)
-Serveur TCP avec client pour la journalisation des événements.
-```bash
-# Terminal 1 - Serveur
-cd journalisation_server && cargo run --bin server
+### TP9 - Chat WebSocket en temps réel
+- Serveur WebSocket : Multi-connexions avec tokio-tungstenite
+- Handshake automatique : Établissement de connexion WebSocket
+- Communication full-duplex : Bidirectionnelle et persistante
+- Messages texte/binaires : Support des deux formats WebSocket
+- Chat temps réel : Diffusion instantanée des messages
+- Simulation de fichiers : Envoi de données binaires simulées
+- Commandes avancées : /help, /users, /stats, /ping, /file
 
-# Terminal 2 - Client
-cd journalisation_server && cargo run --bin client
-
-# Test de concurrence automatisé (10 clients simultanés)
-cd journalisation_server && cargo run --bin test_concurrent
-```
+### Projets de base
+- TP0 : Concepts fondamentaux Rust et système bancaire
+- Serveur de journalisation : TCP avec concurrence et logging
 
 ## Concepts Rust illustrés
 
@@ -120,10 +170,11 @@ cd journalisation_server && cargo run --bin test_concurrent
 - Utilisation de bibliothèques externes (chrono)
 - Traitement de données structurées
 
-### Programmation réseau (journalisation_server)
-- Serveur TCP asynchrone avec Tokio
-- Gestion de connexions clients multiples
-- Journalisation des événements
-- Communication client-serveur en temps réel
-- Safety avec Arc et Mutex pour l'accès concurrent aux ressources partagées
-- Test de concurrence automatisé avec orchestrateur de clients multiples
+### Programmation réseau avancée
+- **UDP (TP7)** : Client/Serveur DNS avec protocole RFC 1035
+- **TCP (TP8)** : Protocole personnalisé de calcul à distance avec JSON
+- **WebSocket (TP9)** : Chat temps réel avec messages texte/binaires
+- **Serveur de journalisation** : TCP asynchrone avec Tokio
+- **Concurrence** : Arc, Mutex et gestion multi-clients
+- **Sérialisation** : serde pour JSON et données binaires
+- **Programmation asynchrone** : tokio et futures pour performance
