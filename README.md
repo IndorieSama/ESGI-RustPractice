@@ -1,6 +1,6 @@
 # ESGI Rust Practice
 
-Projet d'apprentissage du langage Rust avec manipulation de fichiers et gestion de trames structurées.
+Projet d'apprentissage du langage Rust
 
 ## Vue d'ensemble
 
