@@ -1,0 +1,22 @@
+[package]
+name = "tp9_websocket"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.0", features = ["full"] }
+tokio-tungstenite = "0.20"
+tungstenite = "0.20"
+futures-util = "0.3"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+uuid = { version = "1.0", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+
+[[bin]]
+name = "serveur_websocket"
+path = "src/serveur.rs"
+
+[[bin]]
+name = "client_websocket"
+path = "src/client.rs"
